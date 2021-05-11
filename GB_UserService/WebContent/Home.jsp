@@ -1,12 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
      <%@page import="model.Users"%>
-    <%
-if (session.getAttribute("username") == null)
- {
- response.sendRedirect("index.jsp");
- }
-%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,9 +34,11 @@ if (session.getAttribute("username") == null)
 	
 <body><nav class="navbar navbar-dark bg-dark">
  
-    <a class="navbar-brand" href="#">GadgetBadget System</a> <a href = "viewProfile.jsp"><input id="btnView" name="btnView" type="button" value="Manage Profile"  class="btn btn-lg btn-outline-primary"></a>
-    
-    <input id="btnLogout" name="btnLogout" type="button" value="Logout"class="btn btn-lg btn-outline-primary">
+    <a class="navbar-brand" href="#">GadgetBadget System</a> <form class="form-inline">
+    <a href = "register.jsp"><button class="btn btn-lg btn-outline-primary" type="button">&nbsp  &nbsp SignUp &nbsp &nbsp</button></a>
+ 
+  </form>
+    <a href = "index.jsp"><input id="btnLogin" name="btnLogin" type="button" value="Login"class="btn btn-lg btn-outline-primary"></a>
    
   
 </nav>	

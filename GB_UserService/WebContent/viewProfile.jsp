@@ -4,15 +4,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Register</title>
+<title>View profile</title>
 <link rel="stylesheet" href="Views/bootstrap.min.css">
 <script src="Components/jquery-3.2.1.min.js"></script>
-<!-- <script src="Components/auth.js"></script> -->
+<script src="Components/auth.js"></script>
 <script src="Components/user.js"></script>
 </head>
 <body>
@@ -22,15 +21,12 @@
  
   </form>
 <a href = "Home.jsp"><input id="btnHome" name="btnHome" type="button" value="Home"  class="btn btn-lg btn-outline-primary"></a>
-         
-   
-  
-   
-  
-</nav>	
+
+</nav>
+
 <div class="container"><div class="row"><div class="col-6">
 
-		<h2>Register here </h2>
+		<h2>Manage User Profile </h2>
 		<form id="formItem" name="formItem">
 
 		First name:
@@ -46,17 +42,17 @@
 	     Email address:
 		<input id="email" name="email" type="text"class="form-control form-control-sm"><br>
 		Username:
-		<input id="uname" name="uname" type="text"class="form-control form-control-sm"><br>
+		<input id="uname" name="uname" type="text"class="form-control form-control-sm" ><br>
 		Password:
 		<input id="pwd" name="pwd" type="text"class="form-control form-control-sm">
 		<br>
-		Type (Researcher/Buyer/Seller):
+		Type:
 	
   <input id="type" name="type" type="text"  class="form-control form-control-sm">
  
 		<br>
 		
-		<input id="btnSave" name="btnSave" type="button" value="Register"class="btn btn-primary btn-lg btn-block">
+		<input id="btnSave" name="btnSave" type="button" value="Save"class="btn btn-primary btn-lg btn-block">
 		
 		<input type="hidden" id="hidUserIDSave"name="hidUserIDSave" value="">
 		
@@ -73,5 +69,13 @@
 </div> 
 </div> 
 </div>
+
+<div id="divItemsGrid">
+ <%
+ Users userObj = new Users();
+ out.print(userObj.viewRegUsers());
+ %>
+</div>
+<br>
 </body>
 </html>

@@ -3,6 +3,8 @@ package model;
 
 import java.sql.Connection;
 
+import com.UserAPI;
+
 import java.sql.*;
 import java.sql.Statement;
 import java.util.Base64;
@@ -31,15 +33,83 @@ public class Users {
 		return con;
 	}
 
+	
+	
+	public String viewRegUsers() {
+		// TODO Auto-generated method stub
+		String output = "";
+		try
+		{
+			Connection con = connect();
+			if (con == null)
+			{return "Error while connecting to the database for reading."; }
+			// Prepare the html table to be displayed
+			output = "<table border=\"1\"><tr><th>First Name</th><th>Last Name</th><th>NIC</th><th>Address</th><th>Phone Number</th><th>E-mail</th><th>Username</th><th>Password</th><th>Type</th><th>Update</th><th>Remove</th></tr>";
+
+
+			String query = "select * from users ";
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+
+
+			// iterate through the rows in the result set
+			while (rs.next())
+			{
+				String user = Integer.toString(rs.getInt("U_id"));
+				String fname = rs.getString("fname");
+				String lname = rs.getString("lname");
+				String nic = rs.getString("nic");
+				String address = rs.getString("address");
+				String phone = rs.getString("phone");
+				String email = rs.getString("email");
+				String username = rs.getString("username");
+				String password = rs.getString("password");
+				String type = rs.getString("type");
+
+				// Add into the html table
+				output += "<tr><td>" + fname + "</td>";
+				
+				output += "<td>" + lname + "</td>";
+				output += "<td>" + nic + "</td>";
+				output += "<td>" + address + "</td>";
+				output += "<td>" + phone + "</td>";
+				output += "<td>" + email + "</td>";
+				output += "<td>" + username + "</td>";
+				output += "<td>" + password + "</td>";
+				output += "<td>" + type + "</td>";
+
+				// buttons
+				 output += "<td><input name='btnUpdate' type='button' value='Update' "
+				 + "class='btnUpdate btn btn-success' data-itemid='" + user + "'></td>"
+				 + "<td><input name='btnRemove' type='button' value='Remove' "
+				 + "class='btnRemove btn btn-danger' data-itemid='" + user + "'></td></tr>";
+				 
+
+			}
+			con.close();
+
+			// Complete the html table
+			output += "</table>";
+		}
+		catch (Exception e)
+		{
+			output = "Error while reading the users.";
+			System.err.println(e.getMessage());
+		}
+		return output;
+	}
+
 
 	//insert Users
 	public String insertUser(String fname, String lname, String nic, String address, String phone,String email,String username, String password,String type)
 	{
 		String output = "";
-		String regex = "^(.+)@(.+)$";
-
-		//  String regex2 ="^\\d{10}$";
-		String regex3="^[0-9]{9}[vVxX]$";
+		/*
+		 * String regex = "^(.+)@(.+)$";
+		 * 
+		 * // String regex2 ="^\\d{10}$"; String regex3="^[0-9]{9}[vVxX]$";
+		 */
+		
 		try
 		{
 			Connection con = connect();
@@ -59,33 +129,32 @@ public class Users {
 			preparedStmt.setString(6, phone);
 			preparedStmt.setString(7, email);
 			preparedStmt.setString(8, username);
-			preparedStmt.setString(9,Base64.getEncoder().encodeToString( password.getBytes()));
+			preparedStmt.setString(9,password);
 			preparedStmt.setString(10, type);
 			// execute the statement
-
-			if(password.length() < 6 )
-			{
-				output = "Password is too short !";
-			}
-			else if(!(email.matches(regex))) {
-
-				output = "Invalid e-mail address !";
-			}
-
-			else if(!(nic.matches(regex3))) {
-
-				output = "Invalid NIC !";
-			}
-
-			else {
-				preparedStmt.execute();
-				con.close();
-				output = "You have successfully registered.";
-			}
+			preparedStmt.execute();
+			con.close();
+			
+			String newUsers = viewRegUsers();
+			output = "{\"status\":\"success\", \"data\": \"" + newUsers + "\"}";
+			
+			/*
+			 * if(password.length() < 6 ) { output = "Password is too short !"; } else
+			 * if(!(email.matches(regex))) {
+			 * 
+			 * output = "Invalid e-mail address !"; }
+			 * 
+			 * else if(!(nic.matches(regex3))) {
+			 * 
+			 * output = "Invalid NIC !"; }
+			 * 
+			 * else { preparedStmt.execute(); con.close(); output =
+			 * "You have successfully registered."; }
+			 */
 		}
 		catch (Exception e)
 		{
-			output = "Registration failed !";
+			output = "{\"status\":\"error\", \"data\": \"Error while inserting the user.\"}";
 			System.err.println(e.getMessage());
 		}
 		return output;
@@ -93,9 +162,12 @@ public class Users {
 
 
 
+
+	
+	
 	//update profile details
 	
-	public String updateUserinfo(String ID,String fname, String lname, String nic, String address, String phone,String email,String username, String password)  {  
+	public String updateUserinfo(String ID,String fname, String lname, String nic, String address, String phone,String email,String username, String password,String type)  {  
 		String output = ""; 
 
 		try   {    
@@ -107,10 +179,11 @@ public class Users {
 
 			} 
 
-			String query = "UPDATE users SET fname=?,lname=?,nic=?,address=?,phone=?,email=?,username=?,password=?     WHERE U_id=?"; 
+			String query = "UPDATE users SET fname=?,lname=?,nic=?,address=?,phone=?,email=?,username=?,password=?,type=?     WHERE U_id=?"; 
 
 			PreparedStatement preparedStmt = con.prepareStatement(query); 
 
+		
 			preparedStmt.setString(1, fname);   
 			preparedStmt.setString(2, lname);   
 			preparedStmt.setString(3, nic);  
@@ -118,21 +191,23 @@ public class Users {
 			preparedStmt.setString(5, phone); 
 			preparedStmt.setString(6, email); 
 			preparedStmt.setString(7, username); 
-			preparedStmt.setString(8, Base64.getEncoder().encodeToString( password.getBytes()));
+			preparedStmt.setString(8, password);
 			//preparedStmt.setString(8,  password);
-			preparedStmt.setInt(9, Integer.parseInt(ID)); 
+		
+			preparedStmt.setString(9, type); 
+			preparedStmt.setInt(10, Integer.parseInt(ID)); 
 
 			preparedStmt.execute();   
 			con.close(); 
 
-			output = "User details updated successfully"; 
+			String newUsers = viewRegUsers();
+			output = "{\"status\":\"success\", \"data\": \"" + newUsers + "\"}"; 
 
 		}  
 		catch (Exception e)   
 		{  
-			output = "Error while updating the user details.";  
-			System.err.println(e.getMessage()); 
-
+			output = "{\"status\":\"error\", \"data\":\"Error while updating the user.\"}";
+			System.err.println(e.getMessage());
 		} 
 
 		return output; 
@@ -196,11 +271,15 @@ public class Users {
 			preparedStmt.execute();   
 			con.close(); 
 
-			output = "User deleted successfully";   } 
+			String newUsers = viewRegUsers();
+			output = "{\"status\":\"success\", \"data\": \"" + newUsers + "\"}";
+		
+			
+		} 
 		catch (Exception e)  
 		{    
-			output = "Error while deleting the User.";  
-			System.err.println(e.getMessage());  
+			output = "{\"status\":\"error\", \"data\":\"Error while deleting the user.\"}";
+			System.err.println(e.getMessage()); 
 		} 
 
 		return output; 
@@ -426,74 +505,6 @@ public class Users {
 	}
 
 
-
-	// read users(for Admin)
-	public String viewRegUsers() {
-		// TODO Auto-generated method stub
-		String output = "";
-		try
-		{
-			Connection con = connect();
-			if (con == null)
-			{return "Error while connecting to the database for reading."; }
-			// Prepare the html table to be displayed
-			output = "<table border=\"1\"><tr><th>ID</th><th>First Name</th><th>Last Name</th><th>NIC</th><th>Address</th><th>Phone Number</th><th>E-mail</th><th>Username</th><th>Password</th><th>Update</th><th>Remove</th></tr>";
-
-
-			String query = "select * from users";
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
-
-
-			// iterate through the rows in the result set
-			while (rs.next())
-			{
-				String user = Integer.toString(rs.getInt("U_id"));
-				String fname = rs.getString("fname");
-				String lname = rs.getString("lname");
-				String nic = rs.getString("nic");
-				String address = rs.getString("address");
-				String phone = rs.getString("phone");
-				String email = rs.getString("email");
-				String username = rs.getString("username");
-				String password = rs.getString("password");
-
-
-				// Add into the html table
-				output += "<tr><td>" + user + "</td>";
-				output += "<td>" + fname + "</td>";
-				output += "<td>" + lname + "</td>";
-				output += "<td>" + nic + "</td>";
-				output += "<td>" + address + "</td>";
-				output += "<td>" + phone + "</td>";
-				output += "<td>" + email + "</td>";
-				output += "<td>" + username + "</td>";
-				output += "<td>" + password + "</td>";
-
-
-				// buttons
-
-				output +=
-						"<td><input name=\"btnUpdate\" type=\"button\"  value=\"Update\" class=\"btn btn-secondary\"></td>"
-								+ "<td><form method=\"post\" action=\"UserReg.jsp\">" +
-								"<input name=\"btnRemove\" type=\"submit\" value=\"Remove\"  class=\"btn btn-danger\">"
-								+ "<input name=\"UserID\" type=\"hidden\" value=\"" + user + "\">" +
-								"</form></td></tr>";
-
-
-			}
-			con.close();
-
-			// Complete the html table
-			output += "</table>";
-		}
-		catch (Exception e)
-		{
-			output = "Error while reading the users.";
-			System.err.println(e.getMessage());
-		}
-		return output;
-	}
 
 
 

@@ -22,7 +22,7 @@ if (session.getAttribute("username") != null)
   <div class="container">
     <a class="navbar-brand" href="#">GadgetBadget System</a>
     <form class="form-inline">
-    <button class="btn btn-lg btn-outline-primary" type="button"><a href = "register.jsp">&nbsp  &nbsp SignUp &nbsp &nbsp</a></button>
+   <a href = "register.jsp"> <button class="btn btn-lg btn-outline-primary" type="button">&nbsp  &nbsp SignUp &nbsp &nbsp</button></a>
  
   </form>
   </div>
