@@ -44,7 +44,13 @@ if (status == "success")
  if (resultSet.status.trim() == "success")
  {
  // Redirect the valid user-----------------
+
+		if ($("#txtUsername").val().match("admin")) {
+			document.location = "userManagement.jsp";
+		}
+		else{
  document.location = "welcome.jsp";
+		}
  }
  else if (resultSet.status.trim() == "error")
  {

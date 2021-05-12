@@ -21,16 +21,16 @@
 		<a class="navbar-brand" href="#">GadgetBadget System</a>
 		<form class="form-inline"></form>
 		<a href="Home.jsp"><input id="btnHome" name="btnHome"
-			type="button" value="Home" class="btn btn-lg btn-outline-primary"></a>
+			type="button" value="Home" class="btn btn-primary btn-lg"></a>
 
 
 
 
 
-	</nav>
+	</nav><br>
 	<div class="container">
-		<div class="row">
-			<div class="col-6">
+		<div class="row justify-content-center">
+			<div class="col-7">
 
 				<h2>Register here</h2>
 				<form id="formItem" name="formItem">
@@ -50,8 +50,8 @@
 						id="uname" name="uname" type="text"
 						class="form-control form-control-sm"><br> Password: <input
 						id="pwd" name="pwd" type="text"
-						class="form-control form-control-sm"> <br> Type
-					(Researcher/Buyer/Seller): <input id="type" name="type" type="text"
+						class="form-control form-control-sm"> <br>Type (Researcher / Buyer / Seller):
+						 <input id="type" name="type" type="text"
 						class="form-control form-control-sm"> <br> <input
 						id="btnSave" name="btnSave" type="button" value="Register"
 						class="btn btn-primary btn-lg btn-block"> <input

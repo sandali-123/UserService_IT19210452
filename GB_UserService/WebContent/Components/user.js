@@ -131,6 +131,12 @@ function validateItemForm() {
 		return "Insert NIC.";
 	}
 
+	var regex3="^[0-9]{9}[vVxX]$";
+
+	if (!$("#nic").val().match(regex3)) {
+		return "Invalid NIC.";
+	}
+	
 	if ($("#addr").val().trim() == "") {
 		return "Insert Address.";
 	}
@@ -138,7 +144,12 @@ function validateItemForm() {
 	if ($("#pno").val().trim() == "") {
 		return "Insert Phone No.";
 	}
+	
+/*	var regp ="^[0-9]{10}$";
 
+	if (!$("#pno").val().match(regex3)) {
+		return "Invalid Phone No.";
+	}*/
 	var tmpPrice = $("#pno").val().trim();
 	if (!$.isNumeric(tmpPrice)) {
 		return "Insert a numerical value for Phone no.";
@@ -154,9 +165,12 @@ function validateItemForm() {
 	if ($("#pwd").val().trim() == "") {
 		return "Insert Password.";
 	}
+	if ($("#pwd").val().length < 6) {
+		return "Invalid Password.";
+	}
 
 	if ($("#type").val().trim() == "") {
-		return "Insert Type.";
+		return "Insert User Type.";
 	}
 
 

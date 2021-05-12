@@ -36,7 +36,7 @@ if (session.getAttribute("username") == null)
 
 	<div class="container">
 		<div class="row">
-			<div class="col-6">
+			<div class="col-8">
 				<br>
 				<h2>User Management</h2>
 				<!-- 	<form id="formItem" name="formItem">

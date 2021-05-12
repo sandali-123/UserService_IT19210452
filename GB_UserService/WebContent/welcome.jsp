@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page import="model.Users"%>
+
+         <%@page import="java.sql.DriverManager"%>
+ <%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
 <%
 	if (session.getAttribute("username") == null) {
 		response.sendRedirect("Home.jsp");
@@ -43,12 +48,14 @@
 	<nav class="navbar navbar-dark bg-dark">
 
 		<a class="navbar-brand" href="#">GadgetBadget System</a>
-		<form class="form-inline">
+		<form class="form-inline"><input id="btnHi" name="btnHi" type="button" 
+				value= "HI <%=session.getAttribute("username")%>" class="btn btn-lg btn-outline-primary">
+&nbsp &nbsp &nbsp
 			&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <a href="viewProfile.jsp"><input
 				id="btnView" name="btnView" type="button" value="Manage Profile"
-				class="btn btn-lg btn-outline-primary"></a> &nbsp &nbsp &nbsp
+				class="btn btn-primary btn-lg"></a> &nbsp &nbsp &nbsp
 			&nbsp &nbsp &nbsp <input id="btnLogout" name="btnLogout"
-				type="button" value="Logout" class="btn btn-lg btn-outline-primary">
+				type="button" value="Logout" class="btn btn-primary btn-lg">
 
 		</form>
 	</nav>

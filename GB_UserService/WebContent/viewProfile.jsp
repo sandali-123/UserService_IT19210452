@@ -5,6 +5,11 @@
 <%@page import="com.UserAPI"%>
 <%@page import="com.AuthAPI"%>
 
+         <%@page import="java.sql.DriverManager"%>
+ <%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+
 <%
 	if (session.getAttribute("username") == null) {
 		response.sendRedirect("index.jsp");
@@ -25,21 +30,22 @@
 
 		<a class="navbar-brand" href="#">GadgetBadget System</a>
 		<form class="form-inline">
-
-
+<input id="btnHi" name="btnHi" type="button" 
+				value= "HI <%=session.getAttribute("username")%>" class="btn btn-lg btn-outline-primary">
+&nbsp &nbsp &nbsp
 			<a href="Home.jsp"><input id="btnHome" name="btnHome"
-				type="button" value="Home" class="btn btn-lg btn-outline-primary"></a>
+				type="button" value="Home" class="btn btn-primary btn-lg"></a>
 			&nbsp &nbsp &nbsp<input id="btnLogout" name="btnLogout" type="button"
-				value="Logout" class="btn btn-lg btn-outline-primary">
+				value="Logout" class="btn btn-primary btn-lg">
 		</form>
 	</nav>
 	<br>
 	<div class="container">
-		<div class="row">
+		<div class="row justify-content-center">
 			<div class="col-6">
 
 				<h2>Manage User Profile</h2>
-				<form id="formItem" name="formItem">
+				<form id="formItem" name="formItem" >
 
 					First name: <input id="fname" name="fname" type="text"
 						class="form-control form-control-sm"><br> Last name:
@@ -56,7 +62,7 @@
 						id="uname" name="uname" type="text"
 						class="form-control form-control-sm"><br> Password:
 					<input id="pwd" name="pwd" type="text"
-						class="form-control form-control-sm"> <br> Type: <input
+						class="form-control form-control-sm"> <br> Type (Researcher / Buyer / Seller): <input
 						id="type" name="type" type="text"
 						class="form-control form-control-sm"> <br> <input
 						id="btnSave" name="btnSave" type="button" value="Save"
@@ -68,18 +74,18 @@
 				<div id="alertSuccess" class="alert alert-success"></div>
 				<div id="alertError" class="alert alert-danger"></div>
 
-				<br> <br>
-				<div id="divItemsGrid">
+				<br>
+				
+<br>
+			</div>
+		</div>
+
+	</div><div class="row justify-content-center">
+<div id="divItemsGrid">
 					<%
 						Users userObj = new Users();
 						out.print(userObj.viewRegUsers());
 					%>
-				</div>
-
-			</div>
-		</div>
-
-	</div>
-
+				</div></div><br>
 </body>
 </html>

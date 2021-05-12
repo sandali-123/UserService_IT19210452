@@ -43,10 +43,10 @@
 		&nbsp &nbsp &nbsp &nbsp &nbsp
 		<form class="form-inline">
 			<a href="register.jsp"><button
-					class="btn btn-lg btn-outline-primary" type="button">&nbsp
+					class="btn btn-primary btn-lg" type="button">&nbsp
 					&nbsp SignUp &nbsp &nbsp</button></a> &nbsp &nbsp &nbsp<a href="index.jsp"><input
 				id="btnLogin" name="btnLogin" type="button" value="Login"
-				class="btn btn-lg btn-outline-primary"></a>
+				class="btn btn-primary btn-lg"></a>
 
 		</form>
 	</nav>
