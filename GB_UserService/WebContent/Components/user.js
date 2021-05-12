@@ -1,14 +1,16 @@
 $(document).ready(function()
-
 {
-	if ($("#alertSuccess").text().trim() == "") {
-		$("#alertSuccess").hide();
-	}
-	$("#alertError").hide();
+if ($("#alertSuccess").text().trim() == "")
+{
+$("#alertSuccess").hide();
+}
+$("#alertError").hide();
+
+
 
 });
 
-// SAVE ============================================
+//SAVE ============================================
 
 $(document).on("click", "#btnSave", function(event) {
 	// Clear alerts---------------------
@@ -18,7 +20,8 @@ $(document).on("click", "#btnSave", function(event) {
 	$("#alertError").hide();
 	// Form validation-------------------
 	var status = validateItemForm();
-	if (status != true) {
+	if (status != true)
+	{
 		$("#alertError").text(status);
 		$("#alertError").show();
 		return;
@@ -30,7 +33,8 @@ $(document).on("click", "#btnSave", function(event) {
 		type : type,
 		data : $("#formItem").serialize(),
 		dataType : "text",
-		complete : function(response, status) {
+		complete : function(response, status)
+		{
 			onItemSaveComplete(response.responseText, status);
 		}
 	});
@@ -38,11 +42,14 @@ $(document).on("click", "#btnSave", function(event) {
 
 function onItemSaveComplete(response, status) {
 	if (status == "success") {
+		window.location.reload();
 		var resultSet = JSON.parse(response);
-		if (resultSet.status.trim() == "success") {
+		if (resultSet.status.trim() == "success")
+		{
 			$("#alertSuccess").text("Successfully saved.");
 			$("#alertSuccess").show();
 			$("#divItemsGrid").html(resultSet.data);
+
 		} else if (resultSet.status.trim() == "error") {
 			$("#alertError").text(resultSet.data);
 			$("#alertError").show();
@@ -59,7 +66,7 @@ function onItemSaveComplete(response, status) {
 	$("#formItem")[0].reset();
 }
 
-// UPDATE==========================================
+//UPDATE==========================================
 $(document).on("click", ".btnUpdate", function(event) {
 
 	$("#hidUserIDSave").val($(this).data("itemid"));
@@ -76,7 +83,7 @@ $(document).on("click", ".btnUpdate", function(event) {
 
 });
 
-// delete====================================================
+//delete====================================================
 $(document).on("click", ".btnRemove", function(event) {
 	$.ajax({
 		url : "UserAPI",
@@ -91,6 +98,8 @@ $(document).on("click", ".btnRemove", function(event) {
 
 function onItemDeleteComplete(response, status) {
 	if (status == "success") {
+		window.location.reload();
+		//window.location.reload();
 		var resultSet = JSON.parse(response);
 		if (resultSet.status.trim() == "success") {
 			$("#alertSuccess").text("Successfully deleted.");
@@ -108,28 +117,50 @@ function onItemDeleteComplete(response, status) {
 		$("#alertError").show();
 	}
 }
-// CLIENT-MODEL================================================================
+//CLIENT-MODEL================================================================
 function validateItemForm() {
 	if ($("#fname").val().trim() == "") {
-		return "Insert firstname.";
+		return "Insert Firstname.";
 	}
 
 	if ($("#lname").val().trim() == "") {
-		return "Insert lastname.";
+		return "Insert Lastname.";
 	}
 
 	if ($("#nic").val().trim() == "") {
-		return "Insert nic.";
+		return "Insert NIC.";
 	}
 
 	if ($("#addr").val().trim() == "") {
-		return "Insert address.";
+		return "Insert Address.";
+	}
+
+	if ($("#pno").val().trim() == "") {
+		return "Insert Phone No.";
 	}
 
 	var tmpPrice = $("#pno").val().trim();
 	if (!$.isNumeric(tmpPrice)) {
 		return "Insert a numerical value for Phone no.";
 	}
+	if ($("#email").val().trim() == "") {
+		return "Insert Email.";
+	}
+
+	if ($("#uname").val().trim() == "") {
+		return "Insert Username.";
+	}
+
+	if ($("#pwd").val().trim() == "") {
+		return "Insert Password.";
+	}
+
+	if ($("#type").val().trim() == "") {
+		return "Insert Type.";
+	}
+
+
+
 
 	return true;
 }
