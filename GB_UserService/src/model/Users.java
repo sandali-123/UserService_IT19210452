@@ -115,10 +115,10 @@ public class Users {
 			// Prepare the html table to be displayed
 			output = "<table border=\"1\"><tr><th>First Name</th><th>Last Name</th><th>NIC</th><th>Address</th><th>Phone Number</th><th>E-mail</th><th>Username</th><th>Password</th><th>Type</th><th>Update</th><th>Remove</th></tr>";
 
-String usr = "sandali";
+                        //String usr = "sandali";
 
-			String query = "select * from users  where username = '"+usr+"'";
-			//String query = "select * from users ORDER BY U_id DESC LIMIT 1  ";
+			//String query = "select * from users  where username = '"+usr+"'";
+			String query = "select * from users ORDER BY U_id DESC LIMIT 1  ";
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 
